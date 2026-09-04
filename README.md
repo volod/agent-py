@@ -38,7 +38,7 @@ Make these edits as one initial change:
 
 Do not put product work directly into the plan before the specification describes its capability
 and evaluation. The workflow is explained in
-[Planning workflow](docs/guides/planning-workflow.md).
+[Planning workflow](docs/guide/planning-workflow.md).
 
 ## Daily commands
 
@@ -90,7 +90,7 @@ tests/                     unit and governance tests
 docs/design/               product specification
 docs/impl/plan.md          forward-only work
 docs/impl/current/         delivered behavior
-docs/guides/               contributor workflows
+docs/guide/                contributor workflows
 scripts/shared/            shared shell environment helpers
 .github/workflows/         required CI
 ```
