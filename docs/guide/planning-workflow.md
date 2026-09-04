@@ -1,4 +1,4 @@
-# Planning Workflow
+# Planning Workflow Guide
 
 The documentation lifecycle keeps product intent, future work, and available behavior separate.
 

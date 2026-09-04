@@ -6,14 +6,15 @@ from tests.quality._plan_fixture import plan_with, task_block, write_project
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
-def test_empty_repository_plan_reports_no_next_tasks() -> None:
+def test_repository_plan_starts_with_template_personalization() -> None:
     lines = summary_lines(PROJECT_ROOT)
 
     assert lines == [
-        "tasks: 0",
-        "agent lane: 0",
+        "tasks: 1",
+        "agent lane: 1",
         "human lane: 0",
-        "next agent: none",
+        "statuses: CLEAR=1",
+        "next agent: personalize-template-project [project-identity]",
         "next human: none",
     ]
 
