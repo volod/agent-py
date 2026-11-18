@@ -52,7 +52,7 @@ and evaluation. The workflow is explained in
 | `make format` | Apply Ruff formatting |
 | `make ci` | Run required local and CI checks |
 | `make quality` | Run CI checks, coverage, Markdown lint, and package build |
-| `make plan-status` | Count tasks and show the next agent and human work |
+| `make plan-status` | Count tasks and show lane priorities after checking open-task prerequisites |
 | `make lint-spec-plan` | Check the capability registry against the plan |
 | `make lint-doc-links` | Check relative Markdown files and anchors |
 | `make quality-report` | Report files over the soft size limit |
@@ -79,8 +79,9 @@ and into the narrowest current-state page, and the registry row becomes `shipped
 
 ## Agent support
 
-`AGENTS.md` is the canonical policy. `CLAUDE.md`, `GEMINI.md`, `.codex`, and the Cursor rule are
-thin adapters that point to it. Keeping substantive rules in one file prevents tool-specific drift.
+Codex and Cursor read the root [AGENTS.md](AGENTS.md). Claude Code imports it from
+[CLAUDE.md](CLAUDE.md), and [GEMINI.md](GEMINI.md) routes Gemini users to the same policy.
+See [Governance](docs/impl/current/governance.md#agent-instructions) for the integration details.
 
 ## Layout
 
@@ -90,6 +91,7 @@ tests/                     unit and governance tests
 docs/design/               product specification
 docs/impl/plan.md          forward-only work
 docs/impl/current/         delivered behavior
+docs/impl/records/         task contracts and acceptance evidence
 docs/guide/                contributor workflows
 scripts/shared/            shared shell environment helpers
 .github/workflows/         required CI

@@ -6,11 +6,12 @@ in [current-state documentation](current.md). Product behavior and evaluation be
 
 Every task serves a capability from the
 [capability registry](../design/spec.md#capability-registry). Capability groups follow registry
-order in both lanes. Take the first required task in the earliest group that has one.
+order in both lanes. Prefer required work whose start prerequisites are satisfied.
 
 Task fields, statuses, ordering, and the capability-gap lifecycle are defined in the
 [planning workflow](../guide/planning-workflow.md). Run `make plan-status` to view lane counts and
-the next eligible work.
+the highest-priority candidate in each lane after filtering open task prerequisites. Check its
+external and manual dependencies before starting.
 
 ## Agent Implementation Tasks
 

@@ -14,7 +14,7 @@ _LOG = logging.getLogger(__name__)
 _LINK = re.compile(r"\[[^\]]*\]\(([^)\s]+)\)")
 _HEADING = re.compile(r"^(#{1,6}) (.+)$")
 _EXTERNAL = ("http://", "https://", "mailto:", "/")
-_ROOT_DOCS = ("README.md", "AGENTS.md", "CLAUDE.md", "GEMINI.md", ".codex")
+_ROOT_DOCS = ("README.md", "AGENTS.md", "CLAUDE.md", "GEMINI.md")
 
 
 def heading_anchor(title: str) -> str:

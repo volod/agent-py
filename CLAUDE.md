@@ -1,5 +1,3 @@
-# Claude
+# Claude Code
 
-## Project rules
-
-Read [AGENTS.md](AGENTS.md).
+@AGENTS.md
