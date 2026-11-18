@@ -32,7 +32,7 @@ The starter repository includes:
 - locked `uv` dependency management and Make entrypoints;
 - deterministic tests, formatting, linting, typing, coverage, complexity, shell, and docs checks;
 - GitHub Actions using the same CI entrypoint as local development;
-- shared instructions for Codex, Claude, Gemini, and Cursor;
+- shared instructions for Codex, Claude Code, Cursor, and Gemini;
 - a living capability registry and forward-plan/current-state lifecycle.
 
 The starter does not choose a business domain, application framework, persistence layer, deployment
@@ -84,18 +84,21 @@ why the proposed product interface is not yet ready.
 
 ## Documentation and planning integrity
 
-`AGENTS.md` is the canonical contributor policy; tool-specific files are adapters. The product
-specification, forward plan, and current-state tree have distinct ownership. Repository checks
-validate relative links and anchors, capability registration, task metadata, lane-appropriate
-statuses, group ordering, and forward-only plan language.
+`AGENTS.md` defines contributor policy. The specification owns product promises, the plan owns
+remaining work, and current pages describe available behavior. Task records preserve the work
+contract and acceptance evidence after a task leaves the plan.
 
-Boundary: these checks establish structural agreement. They do not decide which capability is
-valuable, whether an evaluation threshold is ambitious enough, or whether a human judgment is
-correct.
+An optional `Requires` field declares open task prerequisites across either lane. Plan summaries
+skip tasks waiting on these prerequisites and rank the remaining tasks by required status, then
+registry and document order. Contributors verify external or manual prerequisites from the task.
 
-Evaluation: synthetic tests reproduce broken links, unknown capabilities, missing task fields,
-wrong task lanes, and invalid ordering; the shipped tree passes the same checks. A negative result
-blocks the change and points to the documents that disagree.
+Boundary. The checks establish structural agreement. Product value, the strength of acceptance
+criteria, completion evidence, and external prerequisites require contributor judgment.
+
+Evaluation. Fixtures exercise broken links, unknown capabilities, missing fields, wrong lanes,
+invalid order, unknown and cyclic prerequisites, and scheduling across lanes. A malformed plan
+fails with actionable diagnostics and the summary withholds scheduling suggestions. A valid plan
+can report that every task in a lane is waiting.
 
 ## Capability Registry
 
@@ -111,7 +114,7 @@ upstream before downstream.
 | --- | --- | --- | --- | --- |
 | 1 | `reproducible-environment` | shipped | A fresh locked environment reaches the complete CI gate without manual repair | [Developer tooling](../impl/current/developer-tooling.md) |
 | 2 | `project-identity` | shipped | Import, CLI, and distribution-build tests agree on the starter identity | [Product core](../impl/current/product-core.md) |
-| 3 | `documentation-integrity` | shipped | Link, registry-plan, task-lane, metadata, ordering, and forward-language checks pass over fixtures and the repository tree | [Governance](../impl/current/governance.md) |
+| 3 | `documentation-integrity` | shipped | Link, registry-plan, task-lane, metadata, ordering, prerequisites, and forward-language checks pass over fixtures and the repository tree | [Governance](../impl/current/governance.md) |
 
 ## Extending This Specification
 
@@ -124,7 +127,9 @@ scope growth. Use this lifecycle in order:
 4. Add a `planned` registry row with that evaluation.
 5. Put tasks under the capability in the implementation line; every task declares `Serves`.
 6. Build and evaluate, document available behavior under current state, remove finished plan scope,
-   and change the registry row to `shipped` with its implementation link.
+   and change the registry row to `shipped` with its implementation link. Follow the
+   [completion workflow](../guide/planning-workflow.md#completion-transition) for the evidence and
+   dependency handoff.
 
 When implementation reveals that an existing capability has the wrong boundary, update its section
 instead of creating an implementation workaround that the specification cannot explain.
@@ -141,7 +146,9 @@ contract requires:
 - groups follow registry order in each task lane;
 - every task declares the required outcome, boundary, execution, and acceptance fields;
 - lane statuses match whether an agent can finish independently or a human action gates acceptance;
-- required tasks precede optional refinements within a capability.
+- required tasks precede optional refinements within a capability;
+- explicit task prerequisites identify open tasks, form no cycles, and keep required work
+  independent of optional refinements.
 
 The check is structural by design. Product priority changes are made by editing the registry order,
 not by adding heuristics to the checker.

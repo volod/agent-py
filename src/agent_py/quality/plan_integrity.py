@@ -7,6 +7,7 @@ from collections import defaultdict
 from collections.abc import Sequence
 from pathlib import Path
 
+from agent_py.quality.plan_dependencies import dependency_findings
 from agent_py.quality.plan_model import (
     AGENT_SECTION,
     HUMAN_SECTION,
@@ -120,8 +121,9 @@ def _task_findings(capabilities: list[Capability], tasks: list[Task]) -> list[st
 
 
 def _section_order_findings(line: list[str], tasks: list[Task], section: str) -> list[str]:
-    groups = list(dict.fromkeys(task.group for task in tasks if task.section == section))
-    ranked = [line.index(group) for group in groups if group in line]
+    ranks = {group: index for index, group in enumerate(line)}
+    groups = [task.group for task in tasks if task.section == section and task.group in ranks]
+    ranked = [ranks[group] for group in groups]
     if ranked == sorted(ranked):
         return []
     return [f"{PLAN_DOC}: groups in '{section}' do not follow registry order: {groups}"]
@@ -184,6 +186,7 @@ def integrity_findings(project_root: Path) -> list[str]:
     return (
         _registry_findings(capabilities, tasks)
         + _task_findings(capabilities, tasks)
+        + [f"{PLAN_DOC}: {finding}" for finding in dependency_findings(tasks)]
         + _order_findings(capabilities, tasks)
         + _plan_text_findings(plan)
     )

@@ -1,7 +1,7 @@
 # AGENTS.md project rules
 
-This file is the canonical instruction source for every coding agent in this repository. Tool-
-specific files must link here and keep only integration-specific routing.
+This file is the canonical instruction source for every coding agent in this repository.
+Tool-specific files contain only integration-specific routing.
 
 ## Development guardrails
 
@@ -41,86 +41,27 @@ specific files must link here and keep only integration-specific routing.
   do not weaken checks to fit new code.
 - Use `make format` to apply formatting. Fix Markdown findings by hand.
 
-## Documentation lifecycle
+## Start work
 
-`docs/impl/plan.md` is FORWARD-ONLY: it contains only work that remains. Delivered behavior lives
-under `docs/impl/current/`, indexed by `docs/impl/current.md`. Product behavior and boundaries live
-in `docs/design/spec.md`.
+- Inspect `git status --short` and read the relevant specification, current docs, and tests.
+- For a named plan task, check its dependencies and acceptance gates before editing. When asked to
+  pick work, use `make plan-status` and check any external or manual dependencies.
+- Fixes and maintenance can start directly when the request defines the scope. For new capabilities
+  or changes to product promises, follow the [planning workflow](docs/guide/planning-workflow.md)
+  before implementation.
 
-After every product or developer-facing change, before reporting completion:
+## Finish work
 
-1. Record what exists in the narrowest current-state page: behavior, modules, commands, tests,
-   verification, and result.
-2. Remove the completed task from `docs/impl/plan.md`; retain only residual future work.
-3. Route anything surfaced during implementation exactly once:
-   - a chore: do it now when necessary, otherwise drop it;
-   - an audit of the work just produced: perform it as part of completion, then drop it;
-   - more work for a registered capability: add a future task, optional when it is a refinement;
-   - a new product capability: use the lifecycle below before creating a task.
-4. Update current-doc indexes when adding a page and run `make lint-doc-links`.
-5. Compare plan task counts before and after and state which capabilities moved.
-
-Do not put completion notes, dates, measurements, or history in the plan. A plan task may use one
-line to link a prerequisite fact in current docs without restating it.
-
-## Product capability lifecycle
-
-The specification is living. It may grow when implementation reveals a real product need, but no
-capability may reach `src/` or the plan without a specification section describing it.
-
-For a new capability, in order:
-
-1. State the operator or domain problem, not an internal artifact preference.
-2. Amend the owning specification section and state what the capability does not do.
-3. Declare the evaluation, acceptance signal, and valid negative result before implementation.
-4. Add a `planned` row to the capability registry.
-5. Add tasks under that capability in registry order, each with a `Serves` line.
-6. Implement it, document it under current state, remove its tasks, and mark the row `shipped` with
-   an implementation link.
-
-If an existing capability is the wrong shape, amend its specification instead of working around it
-in code.
-
-## Task differentiation and ordering
-
-The plan has two lanes:
-
-- **Agent Implementation Tasks:** deterministic work an agent can finish independently. Use
-  `CLEAR` or `RUN NEEDED`.
-- **Human-Assisted Tasks:** acceptance requires human judgment, authorization, private access, or
-  spending authority. Use `BLOCKED BY HUMAN` or `HUMAN-GATED`.
-
-`RESEARCH` is an additional task marker, not an execution status. It means the implementation path
-is unknown and a negative result is acceptable.
-
-Order capability groups exactly as the registry. Within each group: hard dependencies first, then
-work that changes downstream inputs, required work before `(optional)`, and cheaper deterministic
-work before expensive runs. A capability with only optional refinements may move below capabilities
-with required work by reordering the registry once the product priority changes.
-
-Every task must include: `Serves`, `Agent status`, `Dependencies`, `User-visible outcome`, `Scope
-boundary`, `Data and artifact paths`, `Execution path`, `Acceptance gates`, and `Documentation
-target`. `make lint-spec-plan` enforces this structure.
-
-## Specification and plan integrity
-
-The capability registry and implementation plan are two views of one product. Keep these invariants:
-
-- every task serves a real capability and sits under that capability's group;
-- every planned capability has open work;
-- every shipped capability links to current-state documentation;
-- every capability declares an evaluation;
-- capability groups follow registry order in both plan lanes;
-- optional tasks follow required tasks within their own group.
-
-Fix document disagreements when `make lint-spec-plan` fails. Do not loosen the checker.
-
-## Completion discipline
-
-Before declaring work complete, run the relevant tests and `make ci`, update current docs, remove
-finished plan scope, and inspect `git status`. Confirm that only intended files changed and that no
-process, port, temporary scaffold, or external resource started by the work remains active. Runtime
-artifacts under `DATA_DIR` are evidence, not temporary files; retain them unless the task explicitly
-says otherwise.
+- Review the diff against the requested scope and check the normal entry point and failure paths.
+- Update the narrowest [current-state page](docs/impl/current.md) for changes to available behavior.
+  Keep verification methods and durable findings there.
+- For planned work, preserve the original task and capture acceptance evidence in its
+  [task record](docs/impl/records/README.md). Remove accepted tasks from the
+  [forward plan](docs/impl/plan.md), update dependent tasks and registry status as needed, and report
+  before/after task counts and the capabilities affected.
+- Run relevant tests and `make ci`. Report failures and skipped gates explicitly. Leave unresolved
+  acceptance work open.
+- Inspect `git diff --check` and `git status --short`. Clean up temporary resources you started and
+  preserve runtime evidence under `DATA_DIR`.
 
 Use ASCII in code, logs, comments, documentation, and generated output.

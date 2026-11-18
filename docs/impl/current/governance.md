@@ -1,33 +1,38 @@
 # Governance
 
-## One rules source
+## Agent instructions
 
-`AGENTS.md` carries the shared development, documentation, task, and completion rules. `CLAUDE.md`,
-`GEMINI.md`, `.codex`, and `.cursor/rules/project-rules.mdc` are deliberately thin adapters. A rule
-change therefore has one canonical edit.
+[AGENTS.md](../../../AGENTS.md) contains shared rules and points agents to the relevant workflow.
+Use repository checks to enforce testable rules and keep detailed procedures in the contributor
+guide.
 
-## Product state transition
+- Codex discovers the root policy and supports discovery of narrower instructions along the
+  working-directory path. [Codex instruction discovery](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
+- Claude Code expands the `@AGENTS.md` import in [CLAUDE.md](../../../CLAUDE.md).
+  Use `/memory` to inspect loaded instructions. [Claude Code memory](https://code.claude.com/docs/en/memory)
+- Cursor Agent uses the root policy directly. Projects copied from the template can add scoped
+  project rules for directory-specific guidance. [Cursor rules](https://cursor.com/docs/rules)
+- [GEMINI.md](../../../GEMINI.md) routes Gemini contributors to the shared policy.
 
-`docs/design/spec.md` owns capabilities, boundaries, evaluations, and registry order.
-`docs/impl/plan.md` owns only work that remains and separates independent agent work from
-human-gated acceptance. This current tree owns available behavior and durable results.
+## Planning and acceptance
 
-`src/agent_py/quality/plan_integrity.py` parses the registry and plan. It rejects unknown or
-misfiled capabilities, missing task fields, status-lane mismatches, missing evaluations or current
-links, out-of-order groups, required tasks after optional tasks, malformed ids, and historical plan
-language. `agent-py-plan` and `make plan-status` reuse the same parsed model to report counts and
-the next task in each lane.
+The [specification](../../design/spec.md) owns capability boundaries, evaluations, and registry
+order. The [forward plan](../plan.md) owns remaining work. Current-state pages describe available
+behavior, and [task records](../records/README.md) preserve the original contract and acceptance
+evidence. The [planning workflow](../../guide/planning-workflow.md) covers changes to each document.
 
-The template plan starts with `personalize-template-project`, and the repository-level plan-summary
-test ensures it remains the first agent task after a repository is created from the template.
+`plan_model.py` reads the registry and task metadata. `plan_integrity.py` checks group placement,
+lane statuses, required metadata, registry order, and forward-only language.
+`plan_dependencies.py` checks open task references across both lanes for unknown IDs, cycles,
+and required work that depends on optional work.
 
-`src/agent_py/quality/doc_links.py` checks repository documentation before a Git commit is required.
-It validates relative file targets and generated heading anchors while ignoring fenced examples and
-external URLs.
+`make plan-status` and `agent-py-plan` use `plan_summary.py`. They count work and surface lane
+priority after filtering tasks whose explicit prerequisites are still open. The template starts
+with `personalize-template-project`. Contributors verify manual prerequisites before taking it.
 
-The failure cases and the repository-wide assertions live under `tests/quality/`. The operating
-workflow and full task template live in
-[Planning workflow](../../guide/planning-workflow.md).
+`make lint-doc-links` uses `doc_links.py` to validate relative links and heading anchors before a
+Git commit is required. `make ci` runs both documentation gates and the fixtures in
+`tests/quality/`, including invalid task graphs and cross-lane scheduling.
 
-Documentation category directories use singular names: `design/`, `guide/`, and `impl/`. Page names
-remain specific to their content, and each category `README.md` file provides its local index.
+The [workflow update record](../records/agent-workflow-refresh.md) describes the reference review
+and verification behind these conventions.

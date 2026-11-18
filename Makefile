@@ -85,8 +85,8 @@ lint-doc-links: ## Check that relative Markdown links and anchors resolve
 lint-spec-plan: ## Check capability registry, task structure, status, and ordering
 	@"$(PY)" -m agent_py.quality.plan_integrity --root "$(PROJECT_ROOT)"
 
-plan-status: ## Count tasks by lane/status and show the next eligible work
-	@"$(VENV)/bin/agent-py-plan" --root "$(PROJECT_ROOT)"
+plan-status: ## Count tasks by lane/status and show declared priority
+	@"$(PY)" -m agent_py.quality.plan_summary --root "$(PROJECT_ROOT)"
 
 ci-checks: format-check lint typecheck complexity-gate shell-lint-gate lint-doc-links lint-spec-plan
 

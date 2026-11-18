@@ -110,3 +110,41 @@ def test_main_returns_failure_for_invalid_documents(tmp_path: Path) -> None:
     write_project(tmp_path, plan=plan_with())
 
     assert main(["--root", str(tmp_path)]) == 1
+
+
+def test_returning_to_an_earlier_capability_violates_registry_order(tmp_path: Path) -> None:
+    foundation = task_block(identifier="build-foundation", capability="foundation")
+    repeat = task_block(identifier="more-foundation", capability="foundation")
+    plan = (
+        plan_with(task_block())
+        .replace("### Feature", f"### Foundation -- `foundation`\n\n{foundation}\n### Feature", 1)
+        .replace(
+            "## Human-Assisted Tasks",
+            f"### Foundation -- `foundation`\n\n{repeat}\n## Human-Assisted Tasks",
+        )
+    )
+
+    findings = integrity_findings(write_project(tmp_path, plan=plan))
+
+    assert any("do not follow registry order" in finding for finding in findings)
+
+
+@pytest.mark.parametrize(
+    ("requires", "expected"),
+    [
+        ("`missing`", "requires unknown open task"),
+        ("build-feature", "comma-separated backticked task IDs"),
+        ("`build-feature`", "task dependency cycle"),
+        ("`optional-work`", "required work depends on optional task"),
+    ],
+)
+def test_invalid_task_prerequisites_are_reported(
+    tmp_path: Path, requires: str, expected: str
+) -> None:
+    required = task_block().replace(
+        "- Dependencies: none.", f"- Dependencies: none.\n- Requires: {requires}"
+    )
+    optional = task_block(identifier="optional-work", optional=True)
+    root = write_project(tmp_path, plan=plan_with(required, optional))
+
+    assert any(expected in finding for finding in integrity_findings(root))

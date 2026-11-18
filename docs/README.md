@@ -19,4 +19,5 @@ This directory separates product intent, forward work, current behavior, and con
 | What should the product do? | [Design specification](design/spec.md) |
 | What work remains? | [Implementation plan](impl/plan.md) |
 | What exists and where? | [Current implementation](impl/current.md) |
+| What evidence closed a task? | [Task records](impl/records/README.md) |
 | How should work be performed? | [Contributor guide](guide/README.md) and [AGENTS.md](../AGENTS.md) |

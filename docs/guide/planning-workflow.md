@@ -2,21 +2,20 @@
 
 The documentation lifecycle keeps product intent, future work, and available behavior separate.
 
-## The product-quality discovery circle
+## Choose the work contract
 
-1. **Observe a need.** State what a user or operator cannot do or trust.
-2. **Classify it once.** Choose chore, audit of the current work, extension of a registered
-   capability, or a new capability.
-3. **Specify a capability gap.** For a new capability, define behavior, boundary, evaluation, and a
-   valid negative result before code.
-4. **Register and schedule.** Add a `planned` registry row, then tasks in the correct plan lane.
-5. **Build and evaluate.** Implement the smallest bounded slice and run its declared checks.
-6. **Close the loop.** Move available behavior to current-state docs, remove finished plan scope,
-   update the registry, and classify anything newly surfaced.
+- For a named plan task, read the owning specification and current-state page, verify its
+  prerequisites, and open a [task record](../impl/records/README.md) before implementation.
+- For an ordinary fix or maintenance request, use the request and the existing specification as
+  the contract. Create a record when the work needs a durable handoff.
+- For a new capability, define the operator problem, boundary, evaluation, and valid negative
+  result in the [specification](../design/spec.md#extending-this-specification). Register the
+  capability and plan its work before editing production code. Amend the owning section when
+  changing an existing product promise.
 
-A chore is handled during the change when necessary or dropped. An audit of the work just produced
-is part of completion and does not become a permanent task. More work for an existing capability may
-become a task; mark a refinement `(optional)`. A new capability always returns to specification.
+Review findings against the work contract. Fix in-scope findings, attach concrete follow-up to
+the owning open task or create one, and route new capabilities through the specification. Include
+observed behavior, impact, and an acceptance check when scheduling an unfixed bug.
 
 ## Task lanes
 
@@ -33,7 +32,24 @@ agent:
 - `HUMAN-GATED`: the outcome is human judgment, authorization, private access, or spend approval.
 
 Add `Research: yes` when the path is uncertain and a well-supported negative result is acceptable.
-Research is not a reason to omit scope or acceptance criteria.
+Research tasks still need scope and acceptance criteria.
+
+## Prerequisites and scheduling
+
+Use the optional `Requires` field for open tasks that must leave the plan before work can start.
+List backticked task IDs separated by commas. IDs can refer to either lane. The integrity check
+rejects missing IDs, cycles, and required tasks that depend on optional work.
+
+```markdown
+- Requires: `prepare-fixtures`, `approve-inputs`
+```
+
+Use the required `Dependencies` field for external inputs, manual prerequisites, or evidence
+needed at acceptance. Use `none.` when there is no additional prerequisite. A human-lane task
+should name the specific input, decision, or authorization required and what an agent can prepare.
+
+`make plan-status` skips tasks with an open `Requires` entry, then lists priority in each lane.
+Check the `Dependencies` field and the task's acceptance gates before starting.
 
 ## Task shape
 
@@ -69,18 +85,22 @@ Capability groups follow the registry. Within a group:
 3. required work before optional refinements;
 4. cheap deterministic work before expensive runs.
 
-If priorities change, edit the registry order and move the same groups in both lanes. Do not encode
-priority in task wording.
+The summary prefers required work across capabilities, then uses registry and document order.
+If capability priorities change, edit the registry order and move the same groups in both lanes.
 
 ## Completion transition
 
 Before reporting completion:
 
-1. Count plan tasks with `make plan-status`.
-2. Record behavior, locations, commands, tests, and results in the narrowest current-state page.
-3. Remove the finished task and retain only genuinely open residual scope.
-4. Mark a newly complete capability `shipped` and add its current-documentation link.
-5. Run `make lint-spec-plan`, `make lint-doc-links`, and `make ci`.
-6. Count tasks again and report which capabilities moved.
+1. Capture the initial counts with `make plan-status` before editing the plan.
+2. Run the declared acceptance checks. Record exact commands, results, and any outstanding gate.
+   A declared research negative can satisfy acceptance when the evidence supports it.
+3. Update current-state docs with interfaces, locations, verification methods, and durable findings.
+4. Remove the accepted task and its ID from downstream `Requires` fields. Add links to current
+   facts in `Dependencies` where useful. Mark a newly available capability `shipped` and link its current
+   documentation.
+5. Run `make ci` on the resulting tree, including documentation links and spec-plan integrity.
+   Capture the final counts and close the record when all gates pass.
+6. Review the diff and report verification, count changes, affected capabilities, and open gates.
 
-Current-state pages retain decisions and results. The plan never becomes a changelog.
+Keep routine run evidence in the record and durable implementation facts in current state.
