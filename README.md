@@ -1,44 +1,38 @@
 # Agent Python Project
 
-A copy-ready Python project skeleton for teams that want coding agents to work from one set of
-rules, one product specification, and one forward implementation plan.
+A GitHub template for Python projects that use coding agents. It includes a typed starter package,
+an `agent-py` command, a locked development environment, and shared rules for planning,
+implementation, and verification.
 
-The repository is usable before customization: it installs an `agent-py` command, includes a
-small typed package, and ships tests plus documentation-integrity checks. Rename the distribution,
-package, and product language when starting a real project; the planning and quality infrastructure
-is designed to stay.
+## Start a project from this template
 
-## Quick start
+On GitHub, choose **Use this template** and then **Create a new repository**. Enter the new
+repository name and a short project description, then click **Create repository from template**.
+[GitHub template instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)
 
-Requirements: Git, Make, and [uv](https://docs.astral.sh/uv/).
+With Git, Make, and uv installed, substitute your new repository's owner and name below.
 
 ```bash
-cp -R <skeleton-dir> <new-project-dir>
-cd <new-project-dir>
-git init
+git clone https://github.com/OWNER/REPO.git
+cd REPO
 make bootstrap
-make run
-make ci
+make plan-status
 ```
 
-`make bootstrap` creates `.venv` from the committed lockfile. `make run` exercises the starter CLI.
-`make ci` runs the same required checks as GitHub Actions.
+### Give your agent the first task
 
-## Customize the project
+Open your coding agent in the new checkout and give it this prompt to start
+[`personalize-template-project`](docs/impl/plan.md#personalize-template-project).
 
-Make these edits as one initial change:
+> Read `AGENTS.md` and complete `personalize-template-project` from `docs/impl/plan.md` before
+> starting product work. Resolve the project name and description from the existing spec or the
+> new GitHub repository's metadata.
+> Ask me for any missing details or conflicting choices. Rename the starter package, commands, and
+> their references, then verify the result and close the task through its record.
 
-1. Change the name, description, authors, URLs, and script entry in `pyproject.toml`.
-2. Rename `src/agent_py/` and update imports, the mypy path, and tests.
-3. Replace the starter product identity in `src/agent_py/metadata.py`.
-4. Rewrite the purpose, scope, boundaries, and success criteria in `docs/design/spec.md`.
-5. Update the capability registry without deleting the lifecycle and integrity rules.
-6. Replace the generic copyright line in `LICENSE` if your organization requires it.
-7. Run `make lock` and `make quality`.
-
-Do not put product work directly into the plan before the specification describes its capability
-and evaluation. The workflow is explained in
-[Planning workflow](docs/guide/planning-workflow.md).
+The task covers the distribution, imports, CLI entry points, lockfile, tests, tooling, and active
+documentation links. The agent updates the README for the new project and checks the installed
+package and commands.
 
 ## Daily commands
 
@@ -62,26 +56,27 @@ Use Make targets for repeatable workflows. Direct `uv` debugging should first so
 
 ## Documentation model
 
-```text
-docs/design/spec.md        what the product must do and how each capability is evaluated
-          |
-          v
-docs/impl/plan.md          only work that remains, ordered by capability
-          |
-          v
-docs/impl/current.md       index of behavior that exists now
-```
+| What you need | Where to look |
+| --- | --- |
+| Product intent, capability boundaries, and evaluation | [Specification](docs/design/spec.md) |
+| Remaining work, ordered by capability | [Forward plan](docs/impl/plan.md) |
+| Available behavior and how to verify it | [Current implementation](docs/impl/current.md) |
+| Original task contracts, decisions, and acceptance evidence | [Task records](docs/impl/records/README.md) |
 
-The specification is living, not a fixed scope fence. A newly discovered product need enters the
-specification first, including its boundary and negative-result rule. It then receives a `planned`
-registry row and plan tasks. When the capability lands, its implementation moves out of the plan
-and into the narrowest current-state page, and the registry row becomes `shipped`.
+Define new capabilities and their evaluation in the specification before adding plan tasks.
+For planned work, check the prerequisites and open a record with the original task before editing.
+At acceptance, capture the check results and before and after plan counts in that record, update
+the owning current-state page, and remove the accepted task from the forward plan. Update the
+capability registry and any dependent tasks as needed. [Planning workflow](docs/guide/planning-workflow.md)
 
 ## Agent support
 
-Codex and Cursor read the root [AGENTS.md](AGENTS.md). Claude Code imports it from
-[CLAUDE.md](CLAUDE.md), and [GEMINI.md](GEMINI.md) routes Gemini users to the same policy.
-See [Governance](docs/impl/current/governance.md#agent-instructions) for the integration details.
+Keep shared rules for starting work, editing code, and verifying changes in the root policy.
+Codex and Cursor read it directly. [AGENTS.md](AGENTS.md)
+
+Claude Code imports the root policy, and Gemini's entry file directs contributors to it.
+Keep these files focused on their integration. [CLAUDE.md](CLAUDE.md), [GEMINI.md](GEMINI.md),
+[Agent integration details](docs/impl/current/governance.md#agent-instructions)
 
 ## Layout
 

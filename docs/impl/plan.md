@@ -19,26 +19,41 @@ external and manual dependencies before starting.
 
 #### personalize-template-project
 
-Replace the starter identity immediately after creating a repository from this template.
+Personalize a new GitHub repository created from this template before starting product work.
 
 - Serves: `project-identity` -- [Project identity](../design/spec.md#project-identity)
 - Agent status: CLEAR
-- Dependencies: Repository created from the template; target project name and description available
-  from the owner or repository metadata.
-- User-visible outcome: The Python package, installed command, and README identify and describe the
-  created project instead of the template.
-- Scope boundary: Rename `src/agent_py/` and every affected import, test, entry point, package setting,
-  and tooling reference; update the README title, summary, setup examples, and repository layout.
-  Do not choose a product framework, architecture, or deployment model.
-- Data and artifact paths: `src/agent_py/`, `tests/`, `pyproject.toml`, `README.md`, `docs/`, and any
-  package-name references in repository configuration or scripts.
-- Execution path: Derive a valid distribution name, Python import name, and command name from the
-  project name; move the package; update imports, configuration, tests, and documentation; install
-  the renamed package from the lockfile; run its identity command.
-- Acceptance gates: No stale starter-name reference remains where it denotes the active project;
-  package import, CLI, metadata tests, `make ci`, and `make build` pass; the README accurately states
-  the supplied project name and description. A negative result identifies missing or ambiguous
-  owner-provided identity without inventing it.
+- Dependencies: A checkout of the new repository and a project name and short description. Use
+  the owner's explicit choices and project-specific details already in the spec or README. Treat
+  starter placeholders as missing. Identify the new repository and its slug from `origin` and
+  fill gaps from its GitHub metadata, available on the repository page or via
+  `gh repo view OWNER/REPO --json name,description,url`. A repository slug and a display name can
+  differ. Ask the owner only for details that remain missing or ambiguous.
+- User-visible outcome: The README describes the new project, and the installed package and
+  commands use its identity.
+- Scope boundary: Update starter names, URLs and links, setup examples, and repository layout.
+  Replace the template setup instructions in the README with the project's own setup. Keep existing
+  product requirements, planning rules, and quality gates. This task covers identity and packaging.
+- Data and artifact paths: `src/agent_py/`, `tests/`, `pyproject.toml`, `uv.lock`, `Makefile`,
+  `README.md`, `AGENTS.md`, `docs/`, and any other tracked scripts or configuration with
+  project-specific references. Record the work under `docs/impl/records/personalize-template-project.md`.
+- Execution path: Capture the initial `make plan-status` counts and open a task record before
+  editing. Use the resolved project name to choose a valid distribution name, a non-keyword Python
+  import name, and CLI names for both entry points. Move `src/agent_py/` and update imports,
+  metadata, tests, coverage and mypy settings, Make targets, agent instructions, and docs. Use the
+  actual repository URL for repository links and update links to moved paths and renamed headings.
+  Use the resolved description for the README and package metadata, and use it for the spec purpose
+  if the spec still contains starter text. Regenerate the lockfile with `make lock` and install
+  with `make bootstrap`.
+- Acceptance gates: Audit tracked files for starter names and URLs. Replace active references and
+  preserve historical evidence in task records. Verify the installed import and CLI with
+  `make doctor` and `make run`, run the renamed plan command, and pass `make build`. Verify the
+  README and package metadata agree on the project description. Document the resulting identity and
+  follow the [completion workflow](../guide/planning-workflow.md#completion-transition) to record
+  the evidence and plan counts. When removing this task, retire the template-only assertion in
+  `tests/quality/test_plan_summary.py` that expects it as the first task, then run `make ci` on the
+  resulting tree. If the identity remains unresolved, identify the missing input and leave the task
+  open.
 - Documentation target: [Product core](current/product-core.md)
 
 ## Human-Assisted Tasks
