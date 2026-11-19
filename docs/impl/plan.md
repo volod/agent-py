@@ -37,7 +37,9 @@ Personalize a new GitHub repository created from this template before starting p
   product requirements, planning rules, and quality gates. This task covers identity and packaging.
 - Data and artifact paths: `src/agent_py/`, `tests/`, `pyproject.toml`, `uv.lock`, `Makefile`,
   `README.md`, `AGENTS.md`, `docs/`, and any other tracked scripts or configuration with
-  project-specific references. Record the work under `docs/impl/records/personalize-template-project.md`.
+  project-specific references. Use the
+  [record file naming rules](../guide/planning-workflow.md#record-file-naming)
+  to name and index the task record under `docs/impl/records/`.
 - Execution path: Capture the initial `make plan-status` counts and open a task record before
   editing. Use the resolved project name to choose a valid distribution name, a non-keyword Python
   import name, and CLI names for both entry points. Move `src/agent_py/` and update imports,

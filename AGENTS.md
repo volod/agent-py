@@ -44,7 +44,8 @@ Tool-specific files contain only integration-specific routing.
 ## Start work
 
 - Inspect `git status --short` and read the relevant specification, current docs, and tests.
-- For a named plan task, check its dependencies and acceptance gates before editing. When asked to
+- For a named plan task, check its dependencies and acceptance gates and open a numbered
+  [task record](docs/guide/planning-workflow.md#record-file-naming) before editing. When asked to
   pick work, use `make plan-status` and check any external or manual dependencies.
 - Fixes and maintenance can start directly when the request defines the scope. For new capabilities
   or changes to product promises, follow the [planning workflow](docs/guide/planning-workflow.md)
