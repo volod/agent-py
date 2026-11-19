@@ -93,6 +93,17 @@ Capability groups follow the registry. Within a group:
 The summary prefers required work across capabilities, then uses registry and document order.
 If capability priorities change, edit the registry order and move the same groups in both lanes.
 
+## Record file naming
+
+Name each task record `NNNN-<group>-<task-id>.md`. Use the next unused four-digit sequence
+from the [records index](../impl/records/README.md), starting at `0001`. For planned work, use
+the capability ID as `<group>` and the plan task ID as `<task-id>`. For ad hoc work, use
+`adhoc` as `<group>` and a descriptive lowercase slug as `<task-id>`.
+
+Copy the [record template](../impl/records/template.md), add the new file to the index in
+sequence order, and advance the next unused sequence in the same change. Keep each assigned
+number for the life of its record. The index (`README.md`) and `template.md` are unnumbered.
+
 ## Completion transition
 
 Before reporting completion:
