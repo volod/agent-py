@@ -2,7 +2,8 @@
 
 Forward-only: this file describes work that remains. Available behavior and durable results belong
 in [current-state documentation](current.md). Product behavior and evaluation belong in the
-[specification](../design/spec.md).
+[specification](../design/spec.md). Research questions that stopped, with what would reopen them,
+belong in the [closed-research register](future-research.md).
 
 Every task serves a capability from the
 [capability registry](../design/spec.md#capability-registry). Capability groups follow registry
@@ -48,13 +49,18 @@ Personalize a new GitHub repository created from this template before starting p
 - Acceptance gates: Audit tracked files for starter names and URLs. Replace active references and
   preserve historical evidence in task records. Verify the installed import and CLI with
   `make doctor` and `make run`, run the renamed plan command, and pass `make build`. Verify the
-  README and package metadata agree on the project description. Document the resulting identity and
-  follow the [completion workflow](../guide/planning-workflow.md#completion-transition) to record
-  the evidence and plan counts. When removing this task, retire the template-only assertion in
+  README and package metadata agree on the project description. Document the resulting identity in
+  a new `current/product-core.md` page linked from the [areas index](current.md#areas), point the
+  `project-identity` registry row at it, and replace the
+  [starter identity](../guide/development.md#starter-identity) section of the development guide
+  with a link to it. Follow the
+  [completion workflow](../guide/planning-workflow.md#completion-transition) to record the evidence
+  and plan counts. When removing this task, retire the template-only assertion in
   `tests/quality/test_plan_summary.py` that expects it as the first task, then run `make ci` on the
   resulting tree. If the identity remains unresolved, identify the missing input and leave the task
   open.
-- Documentation target: [Product core](current/product-core.md)
+- Documentation target: A new `current/product-core.md` page listed in the
+  [areas index](current.md#areas).
 
 ## Human-Assisted Tasks
 

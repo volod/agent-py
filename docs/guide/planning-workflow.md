@@ -8,6 +8,9 @@ The documentation lifecycle keeps product intent, future work, and available beh
   prerequisites, and open a [task record](../impl/records/README.md) before implementation.
 - For an ordinary fix or maintenance request, use the request and the existing specification as
   the contract. Create a record when the work needs a durable handoff.
+- Before opening a research task, check the
+  [closed-research register](../impl/future-research.md). A closed question reopens only when its
+  reopening condition holds. See [Closed research](#closed-research).
 - For a new capability, define the operator problem, boundary, evaluation, and valid negative
   result in the [specification](../design/spec.md#extending-this-specification). Register the
   capability and plan its work before editing production code. Amend the owning section when
@@ -32,7 +35,9 @@ agent:
 - `HUMAN-GATED`: the outcome is human judgment, authorization, private access, or spend approval.
 
 Add `Research: yes` when the path is uncertain and a well-supported negative result is acceptable.
-Research tasks still need scope and acceptance criteria.
+Research tasks still need scope and acceptance criteria. A negative result, including "not at this
+scale", leaves the plan as a section in the [closed-research register](../impl/future-research.md)
+that states what would reopen the question.
 
 ## Prerequisites and scheduling
 
@@ -96,11 +101,36 @@ Before reporting completion:
 2. Run the declared acceptance checks. Record exact commands, results, and any outstanding gate.
    A declared research negative can satisfy acceptance when the evidence supports it.
 3. Update current-state docs with interfaces, locations, verification methods, and durable findings.
-4. Remove the accepted task and its ID from downstream `Requires` fields. Add links to current
+4. For a research task that closes negative, add its section to the
+   [closed-research register](../impl/future-research.md) in the same change that removes the task
+   from the plan, and link the section from the record. A task that reopened a closed question
+   rewrites or removes that section as described in [Closed research](#closed-research).
+5. Remove the accepted task and its ID from downstream `Requires` fields. Add links to current
    facts in `Dependencies` where useful. Mark a newly available capability `shipped` and link its current
    documentation.
-5. Run `make ci` on the resulting tree, including documentation links and spec-plan integrity.
+6. Run `make ci` on the resulting tree, including documentation links and spec-plan integrity.
    Capture the final counts and close the record when all gates pass.
-6. Review the diff and report verification, count changes, affected capabilities, and open gates.
+7. Review the diff and report verification, count changes, affected capabilities, and open gates.
 
 Keep routine run evidence in the record and durable implementation facts in current state.
+
+## Closed research
+
+The [closed-research register](../impl/future-research.md) keeps questions that stopped with a
+decision. Its header defines the section shape. A section links the evidence in its record and
+current-state pages rather than restating it, and its reopening condition is something a
+measurement or an outside change can satisfy.
+
+To reopen a closed question once its condition holds, open a task with a new id; the closed id stays
+on the register heading. Link the register section from its `Dependencies` and keep the listed dead
+directions out of its scope. When that
+task is accepted, update the register in the same change so it never contradicts current state:
+
+- if the task ships the behavior, remove the section and point links to it at the new record;
+  `make lint-doc-links` lists any that remain;
+- if the task closes negative again, rewrite the section under its original heading so existing
+  links resolve, link the new record from the answer, and add the newly closed directions.
+
+A `- Reopening task:` line names the open plan task that owns a reopening path, usually a
+human-lane task waiting for an authorization or input. When that task leaves the plan,
+`make lint-spec-plan` fails until the section names the follow-up research task or is rewritten.

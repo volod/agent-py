@@ -8,8 +8,11 @@ This directory separates product intent, forward work, current behavior, and con
   evaluation.
 - [Forward implementation plan](impl/plan.md) contains only work that remains.
 - [Current implementation](impl/current.md) indexes behavior available in the repository.
+- [Closed-research register](impl/future-research.md) records research questions that stopped and
+  what would reopen each.
 - [Planning workflow](guide/planning-workflow.md) explains task lanes and the capability lifecycle.
-- [Development guide](guide/development.md) lists setup and quality workflows.
+- [Development guide](guide/development.md) covers setup, quality workflows, and the checks and
+  agent adapters that come with the template.
 - [Project rules](../AGENTS.md) govern agent and contributor behavior.
 
 ## Document ownership
@@ -20,4 +23,5 @@ This directory separates product intent, forward work, current behavior, and con
 | What work remains? | [Implementation plan](impl/plan.md) |
 | What exists and where? | [Current implementation](impl/current.md) |
 | What evidence closed a task? | [Task records](impl/records/README.md) |
+| Was this question already investigated, and why did it stop? | [Closed-research register](impl/future-research.md) |
 | How should work be performed? | [Contributor guide](guide/README.md) and [AGENTS.md](../AGENTS.md) |

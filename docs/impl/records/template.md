@@ -11,7 +11,8 @@ Summarize the change and any material tradeoffs or authorized scope changes.
 ## Acceptance evidence
 
 Record the status as open or accepted. List commands or artifacts, their results, and any gate
-that still needs evidence. For research, explain how a negative result meets the declared gate.
+that still needs evidence. For research, explain how a negative result meets the declared gate and
+link the question's section in the [closed-research register](../future-research.md).
 
 ## Handoff
 
