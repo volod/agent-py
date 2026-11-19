@@ -77,7 +77,7 @@ Codex and Cursor read it directly. [AGENTS.md](AGENTS.md)
 
 Claude Code imports the root policy, and Gemini's entry file directs contributors to it.
 Keep these files focused on their integration. [CLAUDE.md](CLAUDE.md), [GEMINI.md](GEMINI.md),
-[Agent integration details](docs/impl/current/governance.md#agent-instructions)
+[Agent integration details](docs/guide/development.md#agent-instructions)
 
 ## Layout
 

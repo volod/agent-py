@@ -11,7 +11,8 @@ This directory separates product intent, forward work, current behavior, and con
 - [Closed-research register](impl/future-research.md) records research questions that stopped and
   what would reopen each.
 - [Planning workflow](guide/planning-workflow.md) explains task lanes and the capability lifecycle.
-- [Development guide](guide/development.md) lists setup and quality workflows.
+- [Development guide](guide/development.md) covers setup, quality workflows, and the checks and
+  agent adapters that come with the template.
 - [Project rules](../AGENTS.md) govern agent and contributor behavior.
 
 ## Document ownership

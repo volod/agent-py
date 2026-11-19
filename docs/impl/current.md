@@ -14,8 +14,7 @@ change. Write behavior, modules, commands, and durable findings at the narrowest
 
 ## Areas
 
-| Area | Owns |
-| --- | --- |
-| [Developer tooling](current/developer-tooling.md) | Locked setup, Make workflows, CI, quality gates, artifact roots |
-| [Product core](current/product-core.md) | Starter package identity and CLI |
-| [Governance](current/governance.md) | Agent adapters, capability registry, plan lanes, closed-research register, integrity checks |
+No product areas yet. The tooling, starter identity, and documentation checks that come with the
+template are described in the [development guide](../guide/development.md). When the first area
+page is added under [`current/`](current/README.md), list it here in a table with one row per page:
+its link and what it owns.

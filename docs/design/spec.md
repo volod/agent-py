@@ -121,7 +121,10 @@ reopen the question.
 
 Every product capability appears here exactly once. Status is `planned` when the capability is
 specified and has open plan work, or `shipped` when current-state documentation describes its
-available implementation. A shipped capability may still have optional extension work.
+available implementation. Capabilities that the starter template provides are described in the
+[contributor guide](../guide/README.md) instead, so a new project's current-state area starts empty
+and holds only its own product behavior. A shipped capability may still have optional extension
+work.
 
 Row order is the implementation line. Hard dependencies come first, then work that changes another
 capability's evaluation inputs, then required work before capabilities with only optional work, then
@@ -129,9 +132,9 @@ upstream before downstream.
 
 | # | Capability | Status | How it is evaluated | Implementation |
 | --- | --- | --- | --- | --- |
-| 1 | `reproducible-environment` | shipped | A fresh locked environment reaches the complete CI gate without manual repair | [Developer tooling](../impl/current/developer-tooling.md) |
-| 2 | `project-identity` | shipped | Import, CLI, and distribution-build tests agree on the starter identity | [Product core](../impl/current/product-core.md) |
-| 3 | `documentation-integrity` | shipped | Link, registry-plan, task-lane, metadata, ordering, prerequisites, forward-language, and closed-research register checks pass over fixtures and the repository tree | [Governance](../impl/current/governance.md) |
+| 1 | `reproducible-environment` | shipped | A fresh locked environment reaches the complete CI gate without manual repair | [Development guide](../guide/development.md) |
+| 2 | `project-identity` | shipped | Import, CLI, and distribution-build tests agree on the starter identity | [Starter identity](../guide/development.md#starter-identity) |
+| 3 | `documentation-integrity` | shipped | Link, registry-plan, task-lane, metadata, ordering, prerequisites, forward-language, and closed-research register checks pass over fixtures and the repository tree | [Documentation checks](../guide/development.md#documentation-checks) |
 
 ## Extending This Specification
 
@@ -159,7 +162,8 @@ contract requires:
 - every task serves a registered capability and sits in its capability group;
 - every capability declares an evaluation;
 - every planned capability has at least one open task;
-- every shipped capability links to current-state documentation;
+- every shipped capability links to its current-state documentation, or to the contributor guide
+  when the template provides it;
 - groups follow registry order in each task lane;
 - every task declares the required outcome, boundary, execution, and acceptance fields;
 - lane statuses match whether an agent can finish independently or a human action gates acceptance;

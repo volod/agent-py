@@ -54,7 +54,8 @@ Tool-specific files contain only integration-specific routing.
 
 - Review the diff against the requested scope and check the normal entry point and failure paths.
 - Update the narrowest [current-state page](docs/impl/current.md) for changes to available behavior.
-  Keep verification methods and durable findings there.
+  Keep verification methods and durable findings there. Tooling and checks that come with the
+  template are described in the [development guide](docs/guide/development.md).
 - For planned work, preserve the original task and capture acceptance evidence in its
   [task record](docs/impl/records/README.md). Remove accepted tasks from the
   [forward plan](docs/impl/plan.md), update dependent tasks and registry status as needed, and report
