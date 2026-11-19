@@ -1,7 +1,9 @@
 # Current Implementation
 
 This index describes behavior available now. For product intent read the
-[specification](../design/spec.md); for work that remains read the [forward plan](plan.md).
+[specification](../design/spec.md); for work that remains read the [forward plan](plan.md). For
+research questions that stopped, and what would reopen them, read the
+[closed-research register](future-research.md).
 
 ## Documentation shape
 
@@ -16,4 +18,4 @@ change. Write behavior, modules, commands, and durable findings at the narrowest
 | --- | --- |
 | [Developer tooling](current/developer-tooling.md) | Locked setup, Make workflows, CI, quality gates, artifact roots |
 | [Product core](current/product-core.md) | Starter package identity and CLI |
-| [Governance](current/governance.md) | Agent adapters, capability registry, plan lanes, integrity checks |
+| [Governance](current/governance.md) | Agent adapters, capability registry, plan lanes, closed-research register, integrity checks |

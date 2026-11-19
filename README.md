@@ -47,7 +47,7 @@ package and commands.
 | `make ci` | Run required local and CI checks |
 | `make quality` | Run CI checks, coverage, Markdown lint, and package build |
 | `make plan-status` | Count tasks and show lane priorities after checking open-task prerequisites |
-| `make lint-spec-plan` | Check the capability registry against the plan |
+| `make lint-spec-plan` | Check the capability registry, plan, and closed-research register |
 | `make lint-doc-links` | Check relative Markdown files and anchors |
 | `make quality-report` | Report files over the soft size limit |
 
@@ -62,6 +62,7 @@ Use Make targets for repeatable workflows. Direct `uv` debugging should first so
 | Remaining work, ordered by capability | [Forward plan](docs/impl/plan.md) |
 | Available behavior and how to verify it | [Current implementation](docs/impl/current.md) |
 | Original task contracts, decisions, and acceptance evidence | [Task records](docs/impl/records/README.md) |
+| Research questions already closed, and what would reopen them | [Closed-research register](docs/impl/future-research.md) |
 
 Define new capabilities and their evaluation in the specification before adding plan tasks.
 For planned work, check the prerequisites and open a record with the original task before editing.

@@ -32,7 +32,32 @@ with `personalize-template-project`. Contributors verify manual prerequisites be
 
 `make lint-doc-links` uses `doc_links.py` to validate relative links and heading anchors before a
 Git commit is required. `make ci` runs both documentation gates and the fixtures in
-`tests/quality/`, including invalid task graphs and cross-lane scheduling.
+`tests/quality/`, including invalid task graphs, cross-lane scheduling, and refused register shapes.
 
 The [workflow update record](../records/agent-workflow-refresh.md) describes the reference review
 and verification behind these conventions.
+
+## Closed research
+
+The [closed-research register](../future-research.md) holds research questions that stopped with a
+decision. Each `##` section is headed by the question's former task id and gives the question, an
+answer that links its record and current-state evidence, a reopening condition, and the directions
+not to re-run. The register starts empty. The
+[planning workflow](../../guide/planning-workflow.md#closed-research) covers adding a section at
+completion and rewriting or removing it when a question reopens.
+
+`make lint-spec-plan` runs `research_register.py` after the plan check. It reports, with the
+register line:
+
+- a `##` heading that is not a backticked task id followed by ` -- ` and the question;
+- a section whose id is still an open task in the plan, or appears twice;
+- a missing, repeated, out-of-order, or empty `Question`, `Answer`, `Reopening condition`, or
+  `Do not re-run` part. Part headings match without case, and extra `###` subsections are allowed;
+- a `- Reopening task:` line that is not a list of backticked IDs, or that names a task not open in
+  either plan lane. When the owning task leaves the plan, the check fails until the section is
+  updated.
+
+Fenced examples are ignored, so the header can show the section shape. The plan's forward-language
+check does not read the register, which records history by design. Reviewers judge whether a
+reopening condition is a number or a change in the world. `make plan-status` does not read the
+register. The [register record](../records/closed-research-register.md) explains the format choices.

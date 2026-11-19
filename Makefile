@@ -82,8 +82,9 @@ lint-md: ## Lint repository Markdown and then validate relative links
 lint-doc-links: ## Check that relative Markdown links and anchors resolve
 	@"$(PY)" -m agent_py.quality.doc_links --root "$(PROJECT_ROOT)"
 
-lint-spec-plan: ## Check capability registry, task structure, status, and ordering
+lint-spec-plan: ## Check capability registry, plan tasks, and the closed-research register
 	@"$(PY)" -m agent_py.quality.plan_integrity --root "$(PROJECT_ROOT)"
+	@"$(PY)" -m agent_py.quality.research_register --root "$(PROJECT_ROOT)"
 
 plan-status: ## Count tasks by lane/status and show declared priority
 	@"$(PY)" -m agent_py.quality.plan_summary --root "$(PROJECT_ROOT)"

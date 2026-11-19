@@ -2,7 +2,8 @@
 
 Forward-only: this file describes work that remains. Available behavior and durable results belong
 in [current-state documentation](current.md). Product behavior and evaluation belong in the
-[specification](../design/spec.md).
+[specification](../design/spec.md). Research questions that stopped, with what would reopen them,
+belong in the [closed-research register](future-research.md).
 
 Every task serves a capability from the
 [capability registry](../design/spec.md#capability-registry). Capability groups follow registry

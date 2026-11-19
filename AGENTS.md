@@ -59,6 +59,8 @@ Tool-specific files contain only integration-specific routing.
   [task record](docs/impl/records/README.md). Remove accepted tasks from the
   [forward plan](docs/impl/plan.md), update dependent tasks and registry status as needed, and report
   before/after task counts and the capabilities affected.
+- When research closes negative, add its section to the
+  [closed-research register](docs/impl/future-research.md) in the same change.
 - Run relevant tests and `make ci`. Report failures and skipped gates explicitly. Leave unresolved
   acceptance work open.
 - Inspect `git diff --check` and `git status --short`. Clean up temporary resources you started and
